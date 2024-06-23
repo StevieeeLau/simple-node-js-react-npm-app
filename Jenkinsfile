@@ -9,10 +9,13 @@ pipeline {
 				script {
                     env.PATH = "${tool name: 'NodeJS 22'}/bin:${env.PATH}"
                 }
-				sh 'node -v'
-                sh 'npm -v'
                 sh 'npm install' 
             }
+			stage('Test') { 
+				steps {
+					sh './jenkins/scripts/test.sh' 
+				}
+			}
         }
     }
 }
