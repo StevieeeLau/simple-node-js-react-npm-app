@@ -17,10 +17,19 @@ echo 'can pause running builds of CI/CD applications indefinitely. "npm start"'
 echo 'is followed by another command that retrieves the process ID (PID) value'
 echo 'of the previously run process (i.e. "npm start") and writes this value to'
 echo 'the file ".pidfile".'
+
+echo 'Building the application...'
 set -x
-npm start &
-sleep 1
+npm run build
+set +x
+
+echo 'Starting the application...'
+set -x
+npm start > app.log 2>&1 &
+sleep 5
 echo $! > .pidfile
+ps -p $(cat .pidfile)
+cat app.log
 set +x
 
 echo 'Now...'
